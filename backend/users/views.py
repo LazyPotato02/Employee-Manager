@@ -3,41 +3,41 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from users.serializers import UserRegistrationSerializer
+# from users.serializers import UserRegistrationSerializer
 
 
-class RegisterView(APIView):
-    def post(self, request):
-        serializer = UserRegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            # Generate tokens
-            refresh = RefreshToken.for_user(user)
-
-            # Set cookies
-            response = Response({
-                "message": "User registered successfully",
-                "access": str(refresh.access_token),
-                "refresh": str(refresh),
-            }, status=status.HTTP_201_CREATED)
-
-            response.set_cookie(
-                key='access_token',
-                value=str(refresh.access_token),
-                httponly=True,
-                secure=False,  # Set to True in production (HTTPS)
-                samesite='Lax',
-            )
-            response.set_cookie(
-                key='refresh_token',
-                value=str(refresh),
-                httponly=True,
-                secure=False,  # Set to True in production (HTTPS)
-                samesite='Lax',
-            )
-            return response
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class RegisterView(APIView):
+#     def post(self, request):
+#         serializer = UserRegistrationSerializer(data=request.data)
+#         if serializer.is_valid():
+#             user = serializer.save()
+#             # Generate tokens
+#             refresh = RefreshToken.for_user(user)
+#
+#             # Set cookies
+#             response = Response({
+#                 "message": "User registered successfully",
+#                 "access": str(refresh.access_token),
+#                 "refresh": str(refresh),
+#             }, status=status.HTTP_201_CREATED)
+#
+#             response.set_cookie(
+#                 key='access_token',
+#                 value=str(refresh.access_token),
+#                 httponly=True,
+#                 secure=False,  # Set to True in production (HTTPS)
+#                 samesite='Lax',
+#             )
+#             response.set_cookie(
+#                 key='refresh_token',
+#                 value=str(refresh),
+#                 httponly=True,
+#                 secure=False,  # Set to True in production (HTTPS)
+#                 samesite='Lax',
+#             )
+#             return response
+#
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(APIView):
