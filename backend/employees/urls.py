@@ -4,6 +4,6 @@ from employees.views import EmployeesView, SingleEmployeeView
 
 urlpatterns =[
     path('', EmployeesView.as_view(), name='employees'),
-    path('<int:id>', SingleEmployeeView.as_view(), name='single employee'),
+    path('<int:id>', SingleEmployeeView.as_view(), name='single-employee'),
 
 ]
