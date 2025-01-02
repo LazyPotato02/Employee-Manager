@@ -31,7 +31,7 @@ class SingleCellView(APIView):
         try:
             employee = Cell.objects.get(pk=id)
         except Cell.DoesNotExist:
-            return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Cell not found"}, status=status.HTTP_404_NOT_FOUND)
         serializer = CellSerializer(employee)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -39,7 +39,7 @@ class SingleCellView(APIView):
         try:
             employee = Cell.objects.get(pk=id)
         except Cell.DoesNotExist:
-            return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Cell not found"}, status=status.HTTP_404_NOT_FOUND)
         serializer = CellSerializer(employee, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -50,6 +50,6 @@ class SingleCellView(APIView):
         try:
             employee = Cell.objects.get(pk=id)
         except Cell.DoesNotExist:
-            return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Cell not found"}, status=status.HTTP_404_NOT_FOUND)
         employee.delete()
-        return Response({"message": "Employee deleted."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Cell deleted."}, status=status.HTTP_204_NO_CONTENT)

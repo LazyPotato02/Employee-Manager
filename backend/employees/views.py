@@ -12,6 +12,7 @@ from employees.serializers import EmployeeSerializer
 
 class EmployeesView(APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         employees = Employee.objects.all()
         serializer = EmployeeSerializer(employees, many=True)
@@ -25,9 +26,9 @@ class EmployeesView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class SingleEmployeeView(APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request, id):
         try:
             employee = Employee.objects.get(pk=id)
@@ -54,3 +55,18 @@ class SingleEmployeeView(APIView):
             return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
         employee.delete()
         return Response({"message": "Employee deleted."}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+class GetEmployeesFromCellsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, cell_id):
+        try:
+            print(cell_id)
+            employees = Employee.objects.filter(cell_id=cell_id)
+            print(employees)
+            serializer = EmployeeSerializer(employees, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Employee.DoesNotExist:
+            return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
