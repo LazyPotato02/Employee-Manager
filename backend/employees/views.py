@@ -57,15 +57,12 @@ class SingleEmployeeView(APIView):
         return Response({"message": "Employee deleted."}, status=status.HTTP_204_NO_CONTENT)
 
 
-
 class GetEmployeesFromCellsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, cell_id):
         try:
-            print(cell_id)
             employees = Employee.objects.filter(cell_id=cell_id)
-            print(employees)
             serializer = EmployeeSerializer(employees, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Employee.DoesNotExist:
