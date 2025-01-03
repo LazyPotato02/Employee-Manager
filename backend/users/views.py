@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -87,3 +89,10 @@ class LogoutView(APIView):
         response.delete_cookie('access_token')
         response.delete_cookie('refresh_token')
         return response
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def verify_session(request):
+    print(request)
+    return Response({'loggedIn': True}, status=200)

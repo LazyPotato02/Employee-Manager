@@ -21,7 +21,7 @@ export class AuthService {
 
 
   login(credentials: LoginData): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/users/login`, credentials, {withCredentials: true}).pipe(
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials, {withCredentials: true}).pipe(
       tap(() => {
         this.loggedInSubject.next(true);
       }),
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.post(`${this.apiUrl}/users/logout`, {}, {withCredentials: true}).subscribe({
+    return this.http.post(`${this.apiUrl}/auth/logout`, {}, {withCredentials: true}).subscribe({
       next: () => {
         console.log('Logged out successfully');
         this.router.navigate(['/login']);
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   checkSession(): Observable<boolean> {
-    return this.http.get<{ loggedIn: boolean }>(`${this.apiUrl}/users/verify`, {withCredentials: true}).pipe(
+    return this.http.get<{ loggedIn: boolean }>(`${this.apiUrl}/auth/verify`, {withCredentials: true}).pipe(
       map(response => response.loggedIn),
       tap(loggedIn => this.loggedInSubject.next(loggedIn)),
       catchError(() => {
