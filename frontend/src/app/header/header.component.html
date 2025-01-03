@@ -1,8 +1,6 @@
 <nav class="navBar">
   <a routerLink="/">Home</a>
-  <a href="#" (click)="openForm($event)">Create Order</a>
-
-
+  <a href="#" *ngIf="isLoggedIn" (click)="openForm($event)">Create Order</a>
 
   <a routerLink="/login" *ngIf="!isLoggedIn">Login</a>
   <a routerLink="/logout" *ngIf="isLoggedIn">Logout</a>

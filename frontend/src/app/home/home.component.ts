@@ -30,7 +30,6 @@ export class HomeComponent {
     this.homeService.getCells().subscribe(
       (data: Cells[]) => {
         this.cells = data;
-        console.log('Cells:', data);
       },
       (error) => {
         console.error('Error fetching cells:', error);
