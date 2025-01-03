@@ -1,1 +1,13 @@
-<p>home works!</p>
+<div *ngIf="cells.length > 0; else noCells">
+  <h2>Cells List</h2>
+  <ul>
+    <li *ngFor="let cell of cells">
+      <!--      Fix routes when the cell component is done-->
+      <a routerLink="/cell/{{cell.id}}">Cell: {{ cell.name }}</a>
+    </li>
+  </ul>
+</div>
+
+<ng-template #noCells>
+  <p>No cells available.</p>
+</ng-template>

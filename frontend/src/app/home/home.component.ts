@@ -2,10 +2,17 @@ import {Component} from '@angular/core';
 import {Cells} from './types/cell.interface';
 import {HomeService} from '../auth/services/home/home.service';
 import {Observable} from 'rxjs';
+import {JsonPipe, NgForOf, NgIf} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [
+    JsonPipe,
+    NgIf,
+    NgForOf,
+    RouterLink
+  ],
   templateUrl: './home.component.html',
   standalone: true,
   styleUrl: './home.component.css'
