@@ -6,7 +6,7 @@ import {AuthService} from '../auth/auth';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, NgIf],
+  imports: [RouterLink, NgIf],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
