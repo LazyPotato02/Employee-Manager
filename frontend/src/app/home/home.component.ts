@@ -1,14 +1,12 @@
 import {Component} from '@angular/core';
-import {Cells} from './types/cell.interface';
-import {HomeService} from '../auth/services/home/home.service';
-import {Observable} from 'rxjs';
-import {JsonPipe, NgForOf, NgIf} from '@angular/common';
+import {Cells} from '../types/cells/cell.interface';
+import {CellServices} from '../auth/services/cells/cell.services';
+import {NgForOf, NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-cells',
   imports: [
-    JsonPipe,
     NgIf,
     NgForOf,
     RouterLink
@@ -21,7 +19,7 @@ export class HomeComponent {
 
   cells: Cells[]=[];
 
-  constructor(private homeService: HomeService) {
+  constructor(private homeService: CellServices) {
   }
 
   ngOnInit() {

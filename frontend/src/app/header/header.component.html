@@ -1,5 +1,27 @@
 <nav class="navBar">
   <a routerLink="/">Home</a>
+  <a href="#" (click)="openForm($event)">Create Order</a>
+
+
+
   <a routerLink="/login" *ngIf="!isLoggedIn">Login</a>
   <a routerLink="/logout" *ngIf="isLoggedIn">Logout</a>
 </nav>
+<div class="popup-form" *ngIf="isFormVisible">
+  <div class="popup-content">
+    <span class="close-button" (click)="closeForm()">&times;</span>
+    <h2>Create Order</h2>
+    <form (ngSubmit)="onSubmit()">
+      <label for="productName">Product Name:</label>
+      <input type="text" id="productName" [(ngModel)]="order.order_name" name="productName" required>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" [(ngModel)]="order.quantity" name="quantity" required>
+
+      <label for="price">Done Quantity:</label>
+      <input type="number" id="price" [(ngModel)]="order.done_quantity" name="done_quantity" required>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
