@@ -1,5 +1,5 @@
 @for (employee of employees; track employee.id) {
-  <p>{{ employee.first_name }}</p>
+  <p>{{ employee.first_name }} {{employee.last_name}}</p>
 } @empty {
   <p>There are no items.</p>
 }

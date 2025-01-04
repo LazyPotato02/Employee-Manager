@@ -25,7 +25,6 @@ export class CellsComponent {
     this.employeeService.getCellEmployees(this.id).subscribe({
       next: (data: Employee[]) => {
         this.employees = data;
-        console.log(this.employees);
       },
       error: (err) => {
         console.error('Error fetching employees:', err);
