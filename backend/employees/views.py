@@ -12,7 +12,6 @@ from employees.serializers import EmployeeSerializer
 
 class EmployeesView(APIView):
     permission_classes = [IsAuthenticated]
-
     def get(self, request):
         employees = Employee.objects.all()
         serializer = EmployeeSerializer(employees, many=True)
@@ -20,6 +19,7 @@ class EmployeesView(APIView):
 
     def post(self, request):
         serializer = EmployeeSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

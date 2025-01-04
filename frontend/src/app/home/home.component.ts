@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Cells} from '../types/cells/cell.interface';
-import {CellServices} from '../auth/services/cells/cell.services';
+import {CellServices} from '../services/cells/cell.services';
 import {NgForOf, NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 

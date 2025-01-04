@@ -1,23 +1,46 @@
 <nav class="navBar">
-  <a routerLink="/">Home</a>
-  <a href="#" *ngIf="isLoggedIn" (click)="openForm($event)">Create Order</a>
+  <div class="dropdown" (mouseleave)="closeDropdown()">
+    <button class="dropdown-button" (mouseenter)="openDropdown()">Create</button>
+    <ul *ngIf="isDropdownVisible" class="dropdown-menu">
+      <li (click)="create('order')">Order</li>
+      <li (click)="create('cell')">Cell</li>
+      <li (click)="create('employee')">Employee</li>
+    </ul>
+  </div>
+  <div class="routes">
+    <a routerLink="/">Home</a>
+    <a routerLink="/login" *ngIf="!isLoggedIn">Login</a>
+    <a routerLink="/logout" *ngIf="isLoggedIn">Logout</a>
+  </div>
 
-  <a routerLink="/login" *ngIf="!isLoggedIn">Login</a>
-  <a routerLink="/logout" *ngIf="isLoggedIn">Logout</a>
 </nav>
 <div class="popup-form" *ngIf="isFormVisible">
   <div class="popup-content">
     <span class="close-button" (click)="closeForm()">&times;</span>
     <h2>Create Order</h2>
-    <form (ngSubmit)="onSubmit()">
-      <label for="productName">Product Name:</label>
-      <input type="text" id="productName" [(ngModel)]="order.order_name" name="productName" required>
+    <form (submit)="onSubmit($event)">
+      <div *ngIf="activeForm === 'order'">
+        <label>Order Name:</label>
+        <input [(ngModel)]="order.order_name" name="orderName" type="text" required />
+        <label>Quantity:</label>
+        <input [(ngModel)]="order.quantity" name="quantity" type="number" required />
+        <label>Done Quantity:</label>
+        <input [(ngModel)]="order.done_quantity" name="doneQuantity" type="number" />
+      </div>
 
-      <label for="quantity">Quantity:</label>
-      <input type="number" id="quantity" [(ngModel)]="order.quantity" name="quantity" required>
+      <div *ngIf="activeForm === 'cell'">
+        <label>Cell Name:</label>
+        <input [(ngModel)]="cell.name" name="cellName" type="text" required />
+      </div>
 
-      <label for="price">Done Quantity:</label>
-      <input type="number" id="price" [(ngModel)]="order.done_quantity" name="done_quantity" required>
+      <div *ngIf="activeForm === 'employee'">
+        <label>First Name:</label>
+        <input [(ngModel)]="employee.first_name" name="firstName" type="text" required />
+        <label>Last Name:</label>
+        <input [(ngModel)]="employee.last_name" name="lastName" type="text" required />
+        <label>Cell ID:</label>
+        <input [(ngModel)]="employee.cell" name="cellId" type="number" />
+      </div>
 
       <button type="submit">Submit</button>
     </form>
