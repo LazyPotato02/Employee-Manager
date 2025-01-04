@@ -17,7 +17,7 @@
 <div class="popup-form" *ngIf="isFormVisible">
   <div class="popup-content">
     <span class="close-button" (click)="closeForm()">&times;</span>
-    <h2>Create Order</h2>
+    <h2>Create {{activeForm | titlecase}}</h2>
     <form (submit)="onSubmit($event)">
       <div *ngIf="activeForm === 'order'">
         <label>Order Name:</label>

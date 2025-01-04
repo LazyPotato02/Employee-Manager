@@ -1,8 +1,8 @@
 import { AuthService } from '../services/auth/auth.service';
 import { OrderService } from '../services/orders/order.service';
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+import {NgIf, TitleCasePipe} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {CellServices} from '../services/cells/cell.services';
 import {EmployeeService} from '../services/employee/employee.service';
@@ -10,7 +10,7 @@ import {EmployeeService} from '../services/employee/employee.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, NgIf, FormsModule],
+  imports: [RouterLink, NgIf, FormsModule, TitleCasePipe],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
