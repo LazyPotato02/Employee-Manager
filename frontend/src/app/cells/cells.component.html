@@ -1,1 +1,5 @@
-<p>cells works!</p>
+@for (employee of employees; track employee.id) {
+  <p>{{ employee.first_name }}</p>
+} @empty {
+  <p>There are no items.</p>
+}

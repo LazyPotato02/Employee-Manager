@@ -63,13 +63,14 @@
 
 /* Style for dropdown button */
 .dropdown-button {
-  padding: 0px 20px;
+  padding: 0 20px;
   font-size: 20px;
   cursor: pointer;
   background-color: #cccccc;
   color: black;
   border: none;
   border-radius: 4px;
+  margin-left: 20px;
 }
 .dropdown-button:hover{
   color: white;
