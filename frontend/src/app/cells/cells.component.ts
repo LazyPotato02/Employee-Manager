@@ -17,7 +17,7 @@ export class CellsComponent {
   }
 
   ngOnInit() {
-    
+
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
