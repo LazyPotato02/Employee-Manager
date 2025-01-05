@@ -1,54 +1,107 @@
 .login-container {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #ffffff;
   font-family: Arial, sans-serif;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-
 
 a {
   text-decoration: none;
-  color: #4cae4c;
+  color: #4a90e2;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ffcc00;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
 
 label {
   display: block;
   margin-bottom: 0.5rem;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
 }
 
 input {
   width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
 }
 
 button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #007bff;
+  background-color: #4cae4c;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #227b22;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 button[disabled] {
   background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .error-message {
   color: red;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  font-size: 14px;
+  text-align: left;
 }
 
 .form-group small {
   color: red;
+  font-size: 12px;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-container {
+  animation: fadeIn 0.5s ease-in-out;
 }

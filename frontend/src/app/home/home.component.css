@@ -1,56 +1,84 @@
 .cell-title {
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 50px;
-
+  font-size: 28px;
+  margin-top: 20px;
+  color: #333;
 }
+
+
+.cells-wrapper {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 
 .cells-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Auto-fit cells based on available space */
-  gap: 16px; /* Space between cells */
-  justify-content: center; /* Center cells horizontally */
-  align-items: center; /* Center cells vertically */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
   padding: 0;
-  margin: 0 auto; /* Center the grid container */
-  max-width: 100%;
-  height: 100%; /* Allow vertical centering */
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1200px;
 }
+
 
 .cells-list li {
   list-style-type: none;
-  margin-bottom: 20px;
 }
 
 .cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   text-decoration: none;
-  color: cornflowerblue;
+  color: #4a90e2;
+  padding: 15px 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
   text-align: center;
-  padding: 12px;
-  border: 1px solid #ccc; /* Add a subtle border */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Add hover effects */
-  word-wrap: break-word; /* Wrap long words */
-  word-break: break-word; /* Break long text without spaces */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Show ellipsis for truncated text */
-  white-space: nowrap; /* Ensure single-line truncation */
-  box-sizing: border-box;
-  max-width: 100%; /* Ensure cell width remains consistent */
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 60px;
 }
 
+
 .cell:hover {
-  background-color: #e0e7ff; /* Change background on hover */
-  transform: translateY(-3px); /* Lift slightly on hover */
+  background-color: #4a90e2;
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
-/* Centering the entire grid container */
-.cells-wrapper {
-  display: flex;
-  justify-content: center; /* Center the grid horizontally */
-  align-items: center; /* Center the grid vertically */
-  flex-direction: column; /* Stack the title and the cells-list */
+
+@media (max-width: 768px) {
+  header a {
+    font-size: 14px;
+    margin: 0 5px;
+  }
+
+  .cell-title {
+    font-size: 24px;
+  }
+
+  .cells-list {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+  }
+
+  .cell {
+    font-size: 14px;
+    height: 50px;
+    padding: 10px;
+  }
 }
