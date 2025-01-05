@@ -1,0 +1,76 @@
+.cell-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.cells-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Auto-fit cells based on available space */
+  gap: 16px; /* Space between cells */
+  padding: 0;
+  margin: 0 auto; /* Center the grid */
+}
+
+.cells-list li {
+  list-style-type: none;
+  margin-bottom: 30px;
+}
+
+.cell {
+  font-size: 16px; /* Slightly smaller for better responsiveness */
+  text-decoration: none;
+  color: cornflowerblue;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid #ccc; /* Add a subtle border */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Add hover effects */
+  word-wrap: break-word; /* Ensure text wraps if it's too long */
+  box-sizing: border-box; /* Include padding and border in width/height */
+}
+
+.cell:hover {
+  background-color: #e0e7ff; /* Change background on hover */
+  transform: translateY(-3px); /* Lift slightly on hover */
+  cursor: pointer;
+}
+
+/* Responsive Design */
+
+/* Medium screens (tablets and small laptops) */
+@media (max-width: 1024px) {
+  .cells-list {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minimum cell size */
+  }
+
+  .cell {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Small screens (mobile devices) */
+@media (max-width: 768px) {
+  .cells-list {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Smaller cells for narrow screens */
+  }
+
+  .cell {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+/* Extra small screens (narrow devices) */
+@media (max-width: 480px) {
+  .cells-list {
+    grid-template-columns: repeat(2, 1fr); /* Force 2 cells per row for very small screens */
+  }
+
+  .cell {
+    font-size: 12px;
+    padding: 6px;
+  }
+}

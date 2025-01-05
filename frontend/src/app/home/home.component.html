@@ -1,9 +1,8 @@
-<div *ngIf="cells.length > 0; else noCells">
-  <h2>Cells List</h2>
-  <ul>
-    <li *ngFor="let cell of cells">
-      <!--      Fix routes when the cell component is done-->
-      <a routerLink="/cells/{{cell.id}}">Cell: {{ cell.name }}</a>
+<div class="cells-wrapper" *ngIf="cells.length > 0; else noCells">
+  <h2 class="cell-title">Cells List</h2>
+  <ul class="cells-list">
+    <li  *ngFor="let cell of cells">
+      <a class="cell" routerLink="/cells/{{cell.id}}">Cell: {{ cell.name }}</a>
     </li>
   </ul>
 </div>

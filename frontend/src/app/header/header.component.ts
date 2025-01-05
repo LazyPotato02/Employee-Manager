@@ -118,6 +118,7 @@ export class HeaderComponent implements OnInit {
         this.isFormVisible = false;
         this.errorMessage = null;
         this.cell = { name: '' };
+        window.location.reload()
       },
       error: (err: any) => {
         console.error('Error creating cell:', err);
