@@ -10,7 +10,6 @@ import {RouterLink} from '@angular/router';
     imports: [
         NgForOf,
         NgIf,
-        RouterLink
     ],
     templateUrl: './orders.component.html',
     standalone: true,
