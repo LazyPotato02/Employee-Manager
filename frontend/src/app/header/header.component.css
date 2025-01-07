@@ -76,6 +76,7 @@
 
 /* Dropdown Button */
 .dropdown-button {
+  margin-right: 9vw;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;

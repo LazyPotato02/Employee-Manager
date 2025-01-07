@@ -1,5 +1,9 @@
 <nav class="navBar">
-  <a routerLink="/">Home</a>
+  <div>
+    <a routerLink="/">Home</a>
+    <a routerLink="/">Orders</a>
+    <a routerLink="/">Materials</a>
+  </div>
   <div class="dropdown" (mouseleave)="closeDropdown()">
     <button class="dropdown-button" (mouseenter)="openDropdown()">Create</button>
     <ul *ngIf="isDropdownVisible" class="dropdown-menu">
