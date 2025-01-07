@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
-import {AuthService} from '../services/auth/auth.service';
 import {OrderService} from '../services/orders/order.service';
 import {Orders} from '../types/orders/orders.interface';
 import {NgForOf, NgIf} from '@angular/common';
-import {RouterLink} from '@angular/router';
 
 @Component({
     selector: 'app-orders',
