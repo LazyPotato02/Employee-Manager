@@ -1,1 +1,12 @@
-<p>orders works!</p>
+<div class="orders-wrapper" *ngIf="orders.length > 0; else noorders">
+    <h2 class="cell-title">orders List</h2>
+    <ul class="orders-list">
+        <li  *ngFor="let orders of orders">
+            {{orders.order_name}}
+        </li>
+    </ul>
+</div>
+
+<ng-template #noorders>
+    <p>No orders available.</p>
+</ng-template>

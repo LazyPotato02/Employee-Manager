@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-materials',
   imports: [],
   templateUrl: './materials.component.html',
+  standalone: true,
   styleUrl: './materials.component.css'
 })
 export class MaterialsComponent {
