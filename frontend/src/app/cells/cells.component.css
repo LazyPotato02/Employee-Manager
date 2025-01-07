@@ -41,6 +41,13 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
+.empty-employee{
+  text-align: center;
+  color: #4a90e2;
+  font-size: 48px;
+  transition: all 0.3s ease-in-out;
+  text-overflow: ellipsis;
+}
 
 @media (max-width: 768px) {
 

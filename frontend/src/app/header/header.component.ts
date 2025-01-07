@@ -99,6 +99,7 @@ export class HeaderComponent implements OnInit {
         this.isFormVisible = false;
         this.errorMessage = null;
         this.order = { order_name: '', quantity: 0, done_quantity: 0 };
+        window.location.reload()
       },
       error: (err: any) => {
         console.error('Error creating order:', err);
@@ -137,6 +138,7 @@ export class HeaderComponent implements OnInit {
         this.isFormVisible = false;
         this.errorMessage = null;
         this.employee = { first_name: '', last_name: '', cell: null };
+        window.location.reload()
       },
       error: (err: any) => {
         console.error('Error creating employee:', err);
