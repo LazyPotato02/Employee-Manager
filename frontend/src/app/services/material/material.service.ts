@@ -16,8 +16,8 @@ export class MaterialService {
         return this.http.get<Materials[]>(`${this.apiUrl}`, {withCredentials: true})
     }
 
-    getMaterial(cellId: string | undefined): Observable<Materials[]> {
-        return this.http.get<Materials[]>(`${this.apiUrl}/${cellId}`, {withCredentials: true});
+    getMaterial(materialId: string | undefined): Observable<Materials[]> {
+        return this.http.get<Materials[]>(`${this.apiUrl}/${materialId}`, {withCredentials: true});
     }
 
     createMaterial(employee: any) {
