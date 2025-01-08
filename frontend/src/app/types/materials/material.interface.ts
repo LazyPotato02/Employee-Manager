@@ -1,4 +1,4 @@
-export interface Material {
+export interface Materials {
     material_name: string;
     quantity: number;
 }

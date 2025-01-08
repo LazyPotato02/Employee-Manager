@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Material} from '../../types/materials/material.interface';
+import {Materials} from '../../types/materials/material.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -12,12 +12,12 @@ export class MaterialService {
     constructor(private http: HttpClient) {
     }
 
-    getMaterials(id: number): Observable<Material[]> {
-        return this.http.get<Material[]>(`${this.apiUrl}/${id}`, {withCredentials: true})
+    getMaterials(): Observable<Materials[]> {
+        return this.http.get<Materials[]>(`${this.apiUrl}`, {withCredentials: true})
     }
 
-    getMaterial(cellId: string | undefined): Observable<Material[]> {
-        return this.http.get<Material[]>(`${this.apiUrl}/${cellId}`, {withCredentials: true});
+    getMaterial(cellId: string | undefined): Observable<Materials[]> {
+        return this.http.get<Materials[]>(`${this.apiUrl}/${cellId}`, {withCredentials: true});
     }
 
     createMaterial(employee: any) {

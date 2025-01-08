@@ -1,1 +1,17 @@
-<p>materials works!</p>
+<div class="materials-container" *ngIf="materials.length > 0; else nomaterials">
+    <h2 class="order-title">Materials List</h2>
+
+    <ul class="materials-list">
+        <li  *ngFor="let materials of materials">
+            <div class="order">
+                <p>Name:{{materials.material_name}}</p>
+                <p>Quantity:{{materials.quantity}}</p>
+            </div>
+
+        </li>
+    </ul>
+</div>
+
+<ng-template #nomaterials>
+    <p class="empty-materials">No materials available.</p>
+</ng-template>
