@@ -1,55 +1,56 @@
 <nav class="navBar">
-  <div>
-    <a routerLink="/">Home</a>
-    <a routerLink="/orders">Orders</a>
-    <a routerLink="/">Materials</a>
-  </div>
-  <div class="dropdown" (mouseleave)="closeDropdown()">
-    <button class="dropdown-button" (mouseenter)="openDropdown()">Create</button>
-    <ul *ngIf="isDropdownVisible" class="dropdown-menu">
-      <li (click)="create('order')">Order</li>
-      <li (click)="create('cell')">Cell</li>
-      <li (click)="create('employee')">Employee</li>
-    </ul>
-  </div>
-  <div class="routes">
-    <a routerLink="/login" *ngIf="!isLoggedIn">Login</a>
-    <a routerLink="/logout" *ngIf="isLoggedIn">Logout</a>
-  </div>
+    <div>
+        <a routerLink="/">Home</a>
+        <a routerLink="/orders">Orders</a>
+        <a routerLink="/materials">Materials</a>
+    </div>
+    <div class="dropdown" (mouseleave)="closeDropdown()">
+        <button class="dropdown-button" (mouseenter)="openDropdown()">Create</button>
+        <ul *ngIf="isDropdownVisible" class="dropdown-menu">
+            <li (click)="create('order')">Order</li>
+            <li (click)="create('cell')">Cell</li>
+            <li (click)="create('employee')">Employee</li>
+            <li (click)="create('materials')">Materials</li>
+        </ul>
+    </div>
+    <div class="routes">
+        <a routerLink="/login" *ngIf="!isLoggedIn">Login</a>
+        <a routerLink="/logout" *ngIf="isLoggedIn">Logout</a>
+    </div>
 
 </nav>
 <div class="popup-form" *ngIf="isFormVisible">
-  <div class="popup-content">
-    <span class="close-button" (click)="closeForm()">&times;</span>
-    <h2>Create {{activeForm | titlecase}}</h2>
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
+    <div class="popup-content">
+        <span class="close-button" (click)="closeForm()">&times;</span>
+        <h2>Create {{ activeForm | titlecase }}</h2>
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+        <form (submit)="onSubmit($event)">
+            <div *ngIf="activeForm === 'order'">
+                <label>Order Name:</label>
+                <input [(ngModel)]="order.order_name" name="orderName" type="text" required/>
+                <label>Quantity:</label>
+                <input [(ngModel)]="order.quantity" name="quantity" type="number" required/>
+                <label>Done Quantity:</label>
+                <input [(ngModel)]="order.done_quantity" name="doneQuantity" type="number"/>
+            </div>
+
+            <div *ngIf="activeForm === 'cell'">
+                <label>Cell Name:</label>
+                <input [(ngModel)]="cell.name" name="cellName" type="text" required/>
+            </div>
+
+            <div *ngIf="activeForm === 'employee'">
+                <label>First Name:</label>
+                <input [(ngModel)]="employee.first_name" name="firstName" type="text" required/>
+                <label>Last Name:</label>
+                <input [(ngModel)]="employee.last_name" name="lastName" type="text" required/>
+                <label>Cell ID:</label>
+                <input [(ngModel)]="employee.cell" name="cellId" type="number"/>
+            </div>
+
+            <button class="submitBtn" type="submit">Submit</button>
+        </form>
     </div>
-    <form (submit)="onSubmit($event)">
-      <div *ngIf="activeForm === 'order'">
-        <label>Order Name:</label>
-        <input [(ngModel)]="order.order_name" name="orderName" type="text" required />
-        <label>Quantity:</label>
-        <input [(ngModel)]="order.quantity" name="quantity" type="number" required />
-        <label>Done Quantity:</label>
-        <input [(ngModel)]="order.done_quantity" name="doneQuantity" type="number" />
-      </div>
-
-      <div *ngIf="activeForm === 'cell'">
-        <label>Cell Name:</label>
-        <input [(ngModel)]="cell.name" name="cellName" type="text" required />
-      </div>
-
-      <div *ngIf="activeForm === 'employee'">
-        <label>First Name:</label>
-        <input [(ngModel)]="employee.first_name" name="firstName" type="text" required />
-        <label>Last Name:</label>
-        <input [(ngModel)]="employee.last_name" name="lastName" type="text" required />
-        <label>Cell ID:</label>
-        <input [(ngModel)]="employee.cell" name="cellId" type="number" />
-      </div>
-
-      <button class="submitBtn" type="submit">Submit</button>
-    </form>
-  </div>
 </div>
