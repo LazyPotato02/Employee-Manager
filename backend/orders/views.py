@@ -30,7 +30,7 @@ class SingleOrderView(APIView):
         try:
             employee = Orders.objects.get(pk=id)
         except Orders.DoesNotExist:
-            return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
         serializer = OrderSerializer(employee)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -38,7 +38,7 @@ class SingleOrderView(APIView):
         try:
             employee = Orders.objects.get(pk=id)
         except Orders.DoesNotExist:
-            return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
         serializer = OrderSerializer(employee, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -49,6 +49,6 @@ class SingleOrderView(APIView):
         try:
             employee = Orders.objects.get(pk=id)
         except Orders.DoesNotExist:
-            return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
         employee.delete()
-        return Response({"message": "Employee deleted."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Order deleted."}, status=status.HTTP_204_NO_CONTENT)
