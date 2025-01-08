@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'employees',
     'orders',
     'cells',
+    'materials',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
