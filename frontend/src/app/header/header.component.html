@@ -49,6 +49,12 @@
                 <label>Cell ID:</label>
                 <input [(ngModel)]="employee.cell" name="cellId" type="number"/>
             </div>
+            <div *ngIf="activeForm === 'materials'">
+                <label>Material Name:</label>
+                <input [(ngModel)]="material.material_name" name="materialName" type="text" required/>
+                <label>Quantity:</label>
+                <input [(ngModel)]="material.quantity" name="quantity" type="number" required/>
+            </div>
 
             <button class="submitBtn" type="submit">Submit</button>
         </form>

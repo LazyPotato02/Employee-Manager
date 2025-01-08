@@ -6,6 +6,7 @@ import {NgIf, TitleCasePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {CellServices} from '../services/cells/cell.services';
 import {EmployeeService} from '../services/employee/employee.service';
+import {MaterialService} from '../services/material/material.service';
 
 @Component({
     selector: 'app-header',
@@ -46,7 +47,8 @@ export class HeaderComponent implements OnInit {
         private authService: AuthService,
         private orderService: OrderService,
         private cellService: CellServices,
-        private employeeService: EmployeeService
+        private employeeService: EmployeeService,
+        private materialService: MaterialService,
     ) {
         this.authService.isLoggedIn$.subscribe((loggedIn) => {
             this.isAuthenticated = loggedIn;
@@ -87,6 +89,9 @@ export class HeaderComponent implements OnInit {
                 break;
             case 'employee':
                 this.createEmployee();
+                break;
+            case 'materials':
+                this.createMaterials();
                 break;
             default:
                 console.error('Unknown form type.');
@@ -156,11 +161,11 @@ export class HeaderComponent implements OnInit {
             this.errorMessage = 'Please provide valid order details.';
             return;
         }
-        this.orderService.createOrder(this.order).subscribe({
+        this.materialService.createMaterial(this.material).subscribe({
             next: (response: any) => {
                 this.isFormVisible = false;
                 this.errorMessage = null;
-                this.order = {order_name: '', quantity: 0, done_quantity: 0};
+                this.material = {material_name: '', quantity: 0};
                 window.location.reload()
             },
             error: (err: any) => {
