@@ -2,13 +2,12 @@
     <h2 class="order-title">Materials List</h2>
 
     <ul class="materials-list">
-        <li  *ngFor="let materials of materials">
+        <li *ngFor="let material of materials">
             <div class="order">
-                <p>Name:{{materials.material_name}}</p>
-                <p>Quantity:{{materials.quantity}}</p>
-                <button (click)="openEditForm(material)">Edit</button>
+                <p>Name: {{ material.material_name }}</p>
+                <p>Quantity: {{ material.quantity }}</p>
+                <button class="button" (click)="openEditForm(material)">Edit</button>
             </div>
-
         </li>
     </ul>
 </div>

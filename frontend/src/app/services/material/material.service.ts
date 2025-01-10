@@ -17,10 +17,10 @@ export class MaterialService {
     }
 
     getMaterial(materialId: string | undefined): Observable<Materials[]> {
-        return this.http.get<Materials[]>(`${this.apiUrl}/${materialId}`, {withCredentials: true});
+        return this.http.get<Materials[]>(`${this.apiUrl}${materialId}`, {withCredentials: true});
     }
     updateMaterial(material: Materials): Observable<Materials> {
-        return this.http.put<Materials>(`${this.apiUrl}/${material.id}`, material);
+        return this.http.put<Materials>(`${this.apiUrl}${material.id}`, material, {withCredentials: true});
     }
     createMaterial(employee: any) {
         return this.http.post(this.apiUrl, employee, {withCredentials: true});

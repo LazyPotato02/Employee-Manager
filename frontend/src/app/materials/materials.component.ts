@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MaterialService} from '../services/material/material.service';
 import {Materials} from '../types/materials/material.interface';
 import {NgForOf, NgIf} from '@angular/common';
@@ -21,7 +21,8 @@ export class MaterialsComponent {
     selectedMaterial: Materials | null = null;
     material: Materials | undefined;
 
-    constructor(private materialService: MaterialService) {}
+    constructor(private materialService: MaterialService) {
+    }
 
     ngOnInit() {
         this.fetchMaterials();
@@ -38,8 +39,12 @@ export class MaterialsComponent {
         });
     }
 
-    openEditForm(material: Materials | undefined): void {
-        this.selectedMaterial = <Materials>{ ...material };
+    openEditForm(material: Materials): void {
+        this.selectedMaterial = {
+            id: material.id || '',
+            material_name: material.material_name || '',
+            quantity: material.quantity || 0
+        };
         this.showEditForm = true;
     }
 
@@ -52,9 +57,13 @@ export class MaterialsComponent {
         if (this.selectedMaterial) {
             this.materialService.updateMaterial(this.selectedMaterial).subscribe({
                 next: () => {
-                    const index = this.materials.findIndex(m => m.id === this.selectedMaterial?.id);
+                    const index = this.materials.findIndex(m => m.id === this.selectedMaterial!.id);
                     if (index > -1) {
-                        this.materials[index] = <Materials>{...this.selectedMaterial};
+                        this.materials[index] = {
+                            id: this.selectedMaterial!.id,
+                            material_name: this.selectedMaterial!.material_name,
+                            quantity: this.selectedMaterial!.quantity
+                        };
                     }
                     this.closeEditForm();
                 },
