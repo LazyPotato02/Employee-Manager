@@ -2,11 +2,14 @@
     <h2 class="order-title">Orders List</h2>
 
     <ul class="orders-list">
-        <li *ngFor="let orders of orders">
-            <p class="order">{{ orders.order_name }}</p>
-            <button class="button" (click)="openEditForm(orders)">Edit</button>
+        <li *ngFor="let order of orders">
+            <div class="order">
+                <p>Order: {{ order.order_name }}</p>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Done quantity: {{ order.done_quantity }}</p>
+                <button class="button" (click)="openEditForm(order)">Edit</button>
+            </div>
         </li>
-
     </ul>
 </div>
 <div *ngIf="selectedOrder" class="modal">
@@ -18,6 +21,9 @@
 
             <label for="quantity">Quantity:</label>
             <input id="quantity" [(ngModel)]="selectedOrder.quantity" name="quantity" type="number" required>
+
+            <label for="done_quantity">Done Quantity:</label>
+            <input id="done_quantity" [(ngModel)]="selectedOrder.done_quantity" name="done_quantity" type="number" required>
 
             <button type="submit">Save</button>
             <button type="button" (click)="closeEditForm()">Cancel</button>
