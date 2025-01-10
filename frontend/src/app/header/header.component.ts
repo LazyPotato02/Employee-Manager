@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
     errorMessage: string | null = null;
 
     order = {
+        id: '',
         order_name: '',
         quantity: 0,
         done_quantity: 0,
@@ -107,7 +108,7 @@ export class HeaderComponent implements OnInit {
             next: (response: any) => {
                 this.isFormVisible = false;
                 this.errorMessage = null;
-                this.order = {order_name: '', quantity: 0, done_quantity: 0};
+                this.order = { id: '',order_name: '', quantity: 0, done_quantity: 0};
                 window.location.reload()
             },
             error: (err: any) => {

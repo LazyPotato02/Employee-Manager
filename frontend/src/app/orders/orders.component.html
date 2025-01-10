@@ -2,12 +2,28 @@
     <h2 class="order-title">Orders List</h2>
 
     <ul class="orders-list">
-        <li  *ngFor="let orders of orders">
-            <p class="order">{{orders.order_name}}</p>
+        <li *ngFor="let orders of orders">
+            <p class="order">{{ orders.order_name }}</p>
+            <button class="button" (click)="openEditForm(orders)">Edit</button>
         </li>
+
     </ul>
 </div>
+<div *ngIf="selectedOrder" class="modal">
+    <div class="modal-content">
+        <h3>Edit Order</h3>
+        <form (ngSubmit)="saveEdit()">
+            <label for="order_name">Name:</label>
+            <input id="order_name" [(ngModel)]="selectedOrder.order_name" name="order_name" required>
 
+            <label for="quantity">Quantity:</label>
+            <input id="quantity" [(ngModel)]="selectedOrder.quantity" name="quantity" type="number" required>
+
+            <button type="submit">Save</button>
+            <button type="button" (click)="closeEditForm()">Cancel</button>
+        </form>
+    </div>
+</div>
 <ng-template #noorders>
     <p class="empty-orders">No orders available.</p>
 </ng-template>
