@@ -6,12 +6,27 @@
             <div class="order">
                 <p>Name:{{materials.material_name}}</p>
                 <p>Quantity:{{materials.quantity}}</p>
+                <button (click)="openEditForm(material)">Edit</button>
             </div>
 
         </li>
     </ul>
 </div>
+<div *ngIf="selectedMaterial" class="modal">
+    <div class="modal-content">
+        <h3>Edit Material</h3>
+        <form (ngSubmit)="saveEdit()">
+            <label for="material_name">Name:</label>
+            <input id="material_name" [(ngModel)]="selectedMaterial.material_name" name="material_name" required>
 
+            <label for="quantity">Quantity:</label>
+            <input id="quantity" [(ngModel)]="selectedMaterial.quantity" name="quantity" type="number" required>
+
+            <button type="submit">Save</button>
+            <button type="button" (click)="closeEditForm()">Cancel</button>
+        </form>
+    </div>
+</div>
 <ng-template #nomaterials>
     <p class="empty-materials">No materials available.</p>
 </ng-template>
