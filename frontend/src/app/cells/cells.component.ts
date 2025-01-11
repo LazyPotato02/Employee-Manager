@@ -26,6 +26,7 @@ export class CellsComponent {
     showEditForm: boolean = false;
     showDeleteConfirmation: boolean = false;
     showAddEmployeesPopup: boolean = false;
+    showStartOrder:boolean = false;
 
     constructor(
         private router: Router,
@@ -81,7 +82,6 @@ export class CellsComponent {
             }
         });
     }
-
 
     openAddEmployeesPopup(): void {
         this.fetchAllEmployees();
@@ -155,7 +155,7 @@ export class CellsComponent {
         if (this.id) {
             this.cellService.deleteCell(this.id).subscribe({
                 next: () => {
-                    this.router.navigate(['/']); // Redirect after deletion
+                    this.router.navigate(['/']);
                 },
                 error: (err) => {
                     console.error('Error deleting cell:', err);
@@ -185,4 +185,15 @@ export class CellsComponent {
             }
         });
     }
+
+    openStartForm(): void {
+        this.showStartOrder = true;
+    }
+    closeStartForm(): void {
+        this.showStartOrder = false;
+    }
+    submitStartOrder(): void {
+
+    }
+
 }
