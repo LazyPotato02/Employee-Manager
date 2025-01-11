@@ -15,7 +15,10 @@ export class OrderService {
 
     getOrders(): any {
         return this.http.get<Orders[]>(this.apiUrl, {withCredentials: true})
+    }
 
+    getOrder(orderName: string | undefined): any {
+        return this.http.get<Orders>(`${this.apiUrl}getStartOrder/${orderName}`, {withCredentials: true})
     }
     updateOrder(order: Orders): Observable<Orders> {
         return this.http.put<Orders>(`${this.apiUrl}${order.id}`, order, {withCredentials: true});

@@ -20,11 +20,12 @@
 <div *ngIf="showStartOrder" class="popup-container">
     <div class="popup">
         <h3>Start Order</h3>
-        <form (ngSubmit)="submitStartOrder()">
+        <form (ngSubmit)="submitStartOrder(order)">
             <label for="cell">Order:</label>
             <input
                 id="order"
                 name="order"
+                [(ngModel)]="order.order_name"
                 type="text"
                 required
             />

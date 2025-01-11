@@ -5,6 +5,8 @@ import {Employee} from '../types/employee/employee.inferface';
 import {EmployeeService} from '../services/employee/employee.service';
 import {FormsModule} from '@angular/forms';
 import {NgForOf, NgIf} from '@angular/common';
+import {Orders} from '../types/orders/orders.interface';
+import {OrderService} from '../services/orders/order.service';
 
 @Component({
     selector: 'app-cells',
@@ -26,12 +28,14 @@ export class CellsComponent {
     showEditForm: boolean = false;
     showDeleteConfirmation: boolean = false;
     showAddEmployeesPopup: boolean = false;
-    showStartOrder:boolean = false;
+    showStartOrder: boolean = false;
+    order: Orders = {id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: ''};
 
     constructor(
         private router: Router,
         private employeeService: EmployeeService,
         private cellService: CellServices,
+        private orderService: OrderService,
         private route: ActivatedRoute
     ) {
         this.route.params.subscribe(params => {
@@ -74,8 +78,6 @@ export class CellsComponent {
                         return employeeCell !== currentCellId;
                     })
                     .map(emp => ({...emp, checked: false}));
-
-                console.log('Filtered employees (not in current cell):', this.allEmployees);
             },
             error: (err) => {
                 console.error('Error fetching all employees:', err);
@@ -186,14 +188,34 @@ export class CellsComponent {
         });
     }
 
-    openStartForm(): void {
+    openStartForm() {
         this.showStartOrder = true;
+        this.resetOrder();
     }
+
+    resetOrder() {
+        this.order = {id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: ''}
+    }
+
     closeStartForm(): void {
         this.showStartOrder = false;
     }
-    submitStartOrder(): void {
 
+    submitStartOrder(order: Orders): void {
+        if (order.order_name) {
+            this.orderService.getOrder(order.order_name).subscribe({
+                next: (response: Orders) => {
+                    this.order = { ...response }
+                    console.log('Order retrieved:', this.order)
+                    console.log(`Done Quantity: ${this.order.done_quantity}`);
+                    this.closeStartForm();
+                }, error: (err: any) => {
+                    console.error('Error updating order:', err);
+                }
+            })
+        } else {
+            console.error('Order name is required!');
+        }
     }
 
 }

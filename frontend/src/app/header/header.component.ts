@@ -1,6 +1,6 @@
 import {AuthService} from '../services/auth/auth.service';
 import {OrderService} from '../services/orders/order.service';
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {NgIf, TitleCasePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
         order_name: '',
         quantity: 0,
         done_quantity: 0,
+        working_cell:'',
     };
 
     cell = {
@@ -108,7 +109,7 @@ export class HeaderComponent implements OnInit {
             next: (response: any) => {
                 this.isFormVisible = false;
                 this.errorMessage = null;
-                this.order = { id: '',order_name: '', quantity: 0, done_quantity: 0};
+                this.order = { id: '',order_name: '', quantity: 0, done_quantity: 0,working_cell: ''};
                 window.location.reload()
             },
             error: (err: any) => {

@@ -52,3 +52,35 @@ class SingleOrderView(APIView):
             return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
         employee.delete()
         return Response({"message": "Order deleted."}, status=status.HTTP_204_NO_CONTENT)
+
+
+class StartOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, order_name):
+        try:
+            employee = Orders.objects.get(order_name=order_name)
+        except Orders.DoesNotExist:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = OrderSerializer(employee)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, order_name):
+        try:
+            employee = Orders.objects.get(order_name=order_name)
+        except Orders.DoesNotExist:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = OrderSerializer(employee, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, order_name):
+        try:
+            employee = Orders.objects.get(order_name=order_name)
+        except Orders.DoesNotExist:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+        employee.delete()
+        return Response({"message": "Order deleted."}, status=status.HTTP_204_NO_CONTENT)
+
