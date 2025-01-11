@@ -20,10 +20,12 @@ export class OrderService {
     getOrder(orderName: string | undefined): any {
         return this.http.get<Orders>(`${this.apiUrl}getStartOrder/${orderName}`, {withCredentials: true})
     }
+
     updateOrder(order: Orders): Observable<Orders> {
         return this.http.put<Orders>(`${this.apiUrl}${order.id}`, order, {withCredentials: true});
     }
     createOrder(data: Orders): any {
+        console.log(data)
         return this.http.post<Orders>(this.apiUrl, data, {withCredentials: true})
     }
     deleteOrder(orderId: string): Observable<void> {

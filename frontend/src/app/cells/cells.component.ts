@@ -29,7 +29,7 @@ export class CellsComponent {
     showDeleteConfirmation: boolean = false;
     showAddEmployeesPopup: boolean = false;
     showStartOrder: boolean = false;
-    order: Orders = {id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: ''};
+    order: Orders = {id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: 0};
 
     constructor(
         private router: Router,
@@ -194,7 +194,7 @@ export class CellsComponent {
     }
 
     resetOrder() {
-        this.order = {id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: ''}
+        this.order = {id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: 0}
     }
 
     closeStartForm(): void {
@@ -206,16 +206,25 @@ export class CellsComponent {
             this.orderService.getOrder(order.order_name).subscribe({
                 next: (response: Orders) => {
                     this.order = { ...response }
-                    console.log('Order retrieved:', this.order)
-                    console.log(`Done Quantity: ${this.order.done_quantity}`);
-                    this.closeStartForm();
+                    if (this.id != null) {
+                        this.order.working_cell = Number(this.id)
+                    }
+                    this.orderService.updateOrder(this.order).subscribe({
+                        next: (response: Orders) => {
+                            console.log(response);
+                        },error: (err: any) => {
+                            console.error('Error updating order:', err);
+                        }
+                    })
                 }, error: (err: any) => {
                     console.error('Error updating order:', err);
                 }
             })
+
         } else {
             console.error('Order name is required!');
         }
+        this.closeStartForm();
     }
 
 }

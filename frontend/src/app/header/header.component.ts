@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
         order_name: '',
         quantity: 0,
         done_quantity: 0,
-        working_cell:'',
+        working_cell:0,
     };
 
     cell = {
@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit {
             next: (response: any) => {
                 this.isFormVisible = false;
                 this.errorMessage = null;
-                this.order = { id: '',order_name: '', quantity: 0, done_quantity: 0,working_cell: ''};
+                this.order = { id: '',order_name: '', quantity: 0, done_quantity: 0,working_cell: 0};
                 window.location.reload()
             },
             error: (err: any) => {

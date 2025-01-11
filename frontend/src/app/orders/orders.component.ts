@@ -46,7 +46,7 @@ export class OrdersComponent {
             order_name: order.order_name || '',
             quantity: order.quantity || 0,
             done_quantity: order.done_quantity || 0,
-            working_cell: order.working_cell || '',
+            working_cell: order.working_cell || 0,
         };
         this.showEditForm = true;
     }
@@ -62,7 +62,7 @@ export class OrdersComponent {
                 next: () => {
                     const index = this.orders.findIndex(order => order.id === this.selectedOrder?.id);
                     if (index > -1) {
-                        this.orders[index] = {working_cell: '', done_quantity: 0, id: '', order_name: '', quantity: 0, ...this.selectedOrder };
+                        this.orders[index] = {working_cell: 0, done_quantity: 0, id: '', order_name: '', quantity: 0, ...this.selectedOrder };
                     }
                     this.closeEditForm();
                 },
