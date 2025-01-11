@@ -1,13 +1,25 @@
 <div class="cell-container">
-    <h1 class="employee-title">Employees in Cell {{id}}</h1>
+    <h1 class="employee-title">Employees in Cell {{ id }}</h1>
+    <div class="global-actions">
+        <button class="action-button red" (click)="openDeleteCellConfirmation()">Delete Cell</button>
+    </div>
     <div class="employee-list">
-        <p *ngFor="let employee of employees; trackBy: trackById" class="employee">
-            ID: {{ employee.id }} {{ employee.first_name }} {{ employee.last_name }}
-            <button (click)="openEditForm(employee)">Edit</button>
-        </p>
+        <div *ngFor="let employee of employees; trackBy: trackById" class="employee">
+            <p>ID: {{ employee.id }} {{ employee.first_name }} {{ employee.last_name }}</p>
+            <button class="edit" (click)="openEditForm(employee)">Edit</button>
+        </div>
         <p *ngIf="employees?.length === 0" class="empty-employee">
             There are no items.
         </p>
+    </div>
+</div>
+
+<div *ngIf="showDeleteConfirmation" class="popup-container">
+    <div class="popup">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete Cell {{ id }}? This action cannot be undone.</p>
+        <button class="confirm" (click)="confirmDeleteCell()">Yes</button>
+        <button class="cancel" (click)="closeDeleteCellConfirmation()">No</button>
     </div>
 </div>
 

@@ -17,11 +17,13 @@ import {NgForOf, NgIf} from '@angular/common';
     standalone: true,
     styleUrls: ['./cells.component.css']
 })
+
 export class CellsComponent {
     id: string | undefined;
     employees: Employee[] = [];
     selectedEmployee: Employee | null = null;
     showEditForm: boolean = false;
+    showDeleteConfirmation: boolean = false;
 
     constructor(
         private router: Router,
@@ -46,11 +48,13 @@ export class CellsComponent {
             });
         }
     }
+
     trackById(index: number, employee: Employee): string {
-        return employee.id.toString(); // Convert id to string
+        return employee.id.toString();
     }
+
     openEditForm(employee: Employee): void {
-        this.selectedEmployee = { ...employee }; // Cloning to avoid direct mutation
+        this.selectedEmployee = { ...employee };
         this.showEditForm = true;
     }
 
@@ -63,16 +67,36 @@ export class CellsComponent {
         if (this.selectedEmployee) {
             this.employeeService.updateEmployee(this.selectedEmployee).subscribe({
                 next: () => {
-                    // Update local employee list
                     const index = this.employees.findIndex(e => e.id === this.selectedEmployee?.id);
                     if (index > -1) {
-                        this.employees[index] = {cell: null, first_name: '', id: 0, last_name: '', ...this.selectedEmployee }; // Safely updating with cloning
+                        this.employees[index] = {cell: null, first_name: '', id: 0, last_name: '', ...this.selectedEmployee };
                     }
                     this.closeEditForm();
-                    window.location.reload()
                 },
                 error: (err: any) => {
                     console.error('Error updating cell:', err);
+                }
+            });
+        }
+    }
+
+    openDeleteCellConfirmation(): void {
+        this.showDeleteConfirmation = true;
+    }
+
+    closeDeleteCellConfirmation(): void {
+        this.showDeleteConfirmation = false;
+    }
+
+    confirmDeleteCell(): void {
+        if (this.id) {
+            this.cellService.deleteCell(this.id).subscribe({
+                next: () => {
+                    console.log(`Cell ${this.id} deleted successfully.`);
+                    this.router.navigate(['/']);
+                },
+                error: (err) => {
+                    console.error(`Error deleting cell ${this.id}:`, err);
                 }
             });
         }
