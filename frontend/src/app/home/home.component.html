@@ -2,7 +2,10 @@
   <h2 class="cell-title">Cells List</h2>
   <ul class="cells-list">
     <li  *ngFor="let cell of cells">
-      <a class="cell" routerLink="/cells/{{cell.id}}">Cell: {{ cell.name }}</a>
+            <a class="cell" routerLink="/cells/{{cell.id}}">
+                <p>Cell: {{ cell.name }}</p>
+                <p>ID: {{cell.id}}</p>
+            </a>
     </li>
   </ul>
 </div>

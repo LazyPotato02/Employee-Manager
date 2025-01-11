@@ -1,13 +1,30 @@
 <div class="cell-container">
-  <h1 class="employee-title">Employees</h1>
-  <div class="employee-list">
-    @for (employee of employees; track employee.id) {
-      <p class="employee" >ID: {{employee.id}} {{ employee.first_name }} {{employee.last_name}}</p>
-    } @empty {
-      <p class="empty-employee">There are no items.</p>
-    }
-  </div>
-
-
+    <h1 class="employee-title">Employees in Cell {{id}}</h1>
+    <div class="employee-list">
+        <p *ngFor="let employee of employees; trackBy: trackById" class="employee">
+            ID: {{ employee.id }} {{ employee.first_name }} {{ employee.last_name }}
+            <button (click)="openEditForm(employee)">Edit</button>
+        </p>
+        <p *ngIf="employees?.length === 0" class="empty-employee">
+            There are no items.
+        </p>
+    </div>
 </div>
 
+<div *ngIf="selectedEmployee" class="popup-container">
+    <div class="popup">
+        <h3>Edit Cell for {{ selectedEmployee.first_name }} {{ selectedEmployee.last_name }}</h3>
+        <form (ngSubmit)="saveCellEdit()">
+            <label for="cell">Cell:</label>
+            <input
+                id="cell"
+                [(ngModel)]="selectedEmployee.cell"
+                name="cell"
+                type="text"
+                required
+            />
+            <button type="submit">Save</button>
+            <button type="button" (click)="closeEditForm()">Cancel</button>
+        </form>
+    </div>
+</div>

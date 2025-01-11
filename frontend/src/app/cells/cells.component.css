@@ -1,68 +1,153 @@
-.cell-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+.cell-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.employee-list{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-  padding: 0;
-  margin: 20px auto;
-  width: 90%;
-  max-width: 1200px;
+.employee-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 0;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
 }
-.employee{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  text-decoration: none;
-  color: #4a90e2;
-  padding: 15px 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  text-align: center;
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 60px;
+
+.employee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    text-decoration: none;
+    color: #4a90e2;
+    padding: 15px 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 60px;
+    flex-direction: column;
 }
-.employee:hover{
-  background-color: #4a90e2;
-  color: white;
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+
+.employee:hover {
+    background-color: #4a90e2;
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
-.empty-employee{
-  text-align: center;
-  color: #4a90e2;
-  font-size: 48px;
-  transition: all 0.3s ease-in-out;
-  text-overflow: ellipsis;
+
+.empty-employee {
+    text-align: center;
+    color: #4a90e2;
+    font-size: 48px;
+    transition: all 0.3s ease-in-out;
+    text-overflow: ellipsis;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid #4caf50;
+}
+
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.popup h3 {
+    margin-top: 0;
+}
+
+.popup form {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup form label {
+    margin-bottom: 5px;
+}
+
+.popup form input {
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.popup form button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.popup form button:hover {
+    background: #0056b3;
+}
+
+.popup form button[type="button"] {
+    background: #ccc;
+    color: black;
+}
+
+.popup form button[type="button"]:hover {
+    background: #999;
 }
 
 @media (max-width: 768px) {
 
-  .employee-title {
-    font-size: 24px;
-  }
+    .employee-title {
+        font-size: 24px;
+    }
 
-  .employee-list {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 15px;
-  }
+    .employee-list {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
 
-  .employee {
-    font-size: 14px;
-    height: 50px;
-    padding: 10px;
-  }
+    .employee {
+        font-size: 14px;
+        height: 50px;
+        padding: 10px;
+    }
 }
