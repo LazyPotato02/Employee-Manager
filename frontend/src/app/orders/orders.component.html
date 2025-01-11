@@ -1,29 +1,33 @@
-<div class="orders-container">
+<div class="order-container">
     <h1 class="order-title">Orders</h1>
-    <div class="orders-list">
-        <p *ngFor="let order of orders" class="order">
-            ID: {{ order.id }} | Name: {{ order.order_name }} | Quantity: {{ order.quantity }} |
-            Done: {{ order.done_quantity }}
-            <button (click)="openEditForm(order)">Edit</button>
-            <button (click)="openDeleteConfirmation(order)">Delete</button>
-
-
-        </p>
-        <p *ngIf="orders?.length === 0" class="empty-orders">
-            There are no orders.
-        </p>
-    </div>
+    <ul class="orders-list">
+        <li *ngFor="let order of orders" class="order">
+            <p>ID: {{ order.id }}</p>
+            <p>Name: {{ order.order_name }}</p>
+            <p>Quantity: {{ order.quantity }}</p>
+            <p>Done: {{ order.done_quantity }}</p>
+            <div>
+                <button class="action-button" (click)="openEditForm(order)">Edit</button>
+                <button class="action-button red" (click)="openDeleteConfirmation(order)">Delete</button>
+            </div>
+        </li>
+    </ul>
+    <p *ngIf="orders?.length === 0" class="empty-orders">
+        There are no orders.
+    </p>
 </div>
 
-
+<!-- Delete Confirmation Popup -->
 <div *ngIf="showDeleteConfirmation" class="popup-container">
     <div class="popup">
         <h3>Confirm Deletion</h3>
         <p>Are you sure you want to delete order "{{ orderToDelete?.order_name }}"?</p>
-        <button (click)="confirmDelete()">Yes</button>
-        <button (click)="closeDeleteConfirmation()">No</button>
+        <button class="confirm" (click)="confirmDelete()">Yes</button>
+        <button class="cancel" (click)="closeDeleteConfirmation()">No</button>
     </div>
 </div>
+
+<!-- Edit Popup -->
 <div *ngIf="selectedOrder" class="popup-container">
     <div class="popup">
         <h3>Edit Order: {{ selectedOrder.order_name }}</h3>
@@ -52,8 +56,8 @@
                 type="number"
                 required
             />
-            <button type="submit">Save</button>
-            <button type="button" (click)="closeEditForm()">Cancel</button>
+            <button class="confirm" type="submit">Save</button>
+            <button class="cancel" type="button" (click)="closeEditForm()">Cancel</button>
         </form>
     </div>
 </div>
