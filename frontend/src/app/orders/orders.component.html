@@ -1,35 +1,59 @@
-<div class="orders-container" *ngIf="orders.length > 0; else noorders">
-    <h2 class="order-title">Orders List</h2>
+<div class="orders-container">
+    <h1 class="order-title">Orders</h1>
+    <div class="orders-list">
+        <p *ngFor="let order of orders" class="order">
+            ID: {{ order.id }} | Name: {{ order.order_name }} | Quantity: {{ order.quantity }} |
+            Done: {{ order.done_quantity }}
+            <button (click)="openEditForm(order)">Edit</button>
+            <button (click)="openDeleteConfirmation(order)">Delete</button>
 
-    <ul class="orders-list">
-        <li *ngFor="let order of orders">
-            <div class="order">
-                <p>Order: {{ order.order_name }}</p>
-                <p>Quantity: {{ order.quantity }}</p>
-                <p>Done quantity: {{ order.done_quantity }}</p>
-                <button class="button" (click)="openEditForm(order)">Edit</button>
-            </div>
-        </li>
-    </ul>
+
+        </p>
+        <p *ngIf="orders?.length === 0" class="empty-orders">
+            There are no orders.
+        </p>
+    </div>
 </div>
-<div *ngIf="selectedOrder" class="modal">
-    <div class="modal-content">
-        <h3>Edit Order</h3>
+
+<!-- Delete Confirmation Popup -->
+<div *ngIf="showDeleteConfirmation" class="popup-container">
+    <div class="popup">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete order "{{ orderToDelete?.order_name }}"?</p>
+        <button (click)="confirmDelete()">Yes</button>
+        <button (click)="closeDeleteConfirmation()">No</button>
+    </div>
+</div>
+<div *ngIf="selectedOrder" class="popup-container">
+    <div class="popup">
+        <h3>Edit Order: {{ selectedOrder.order_name }}</h3>
         <form (ngSubmit)="saveEdit()">
-            <label for="order_name">Name:</label>
-            <input id="order_name" [(ngModel)]="selectedOrder.order_name" name="order_name" required>
-
+            <label for="orderName">Order Name:</label>
+            <input
+                id="orderName"
+                [(ngModel)]="selectedOrder.order_name"
+                name="order_name"
+                type="text"
+                required
+            />
             <label for="quantity">Quantity:</label>
-            <input id="quantity" [(ngModel)]="selectedOrder.quantity" name="quantity" type="number" required>
-
-            <label for="done_quantity">Done Quantity:</label>
-            <input id="done_quantity" [(ngModel)]="selectedOrder.done_quantity" name="done_quantity" type="number" required>
-
+            <input
+                id="quantity"
+                [(ngModel)]="selectedOrder.quantity"
+                name="quantity"
+                type="number"
+                required
+            />
+            <label for="doneQuantity">Done Quantity:</label>
+            <input
+                id="doneQuantity"
+                [(ngModel)]="selectedOrder.done_quantity"
+                name="done_quantity"
+                type="number"
+                required
+            />
             <button type="submit">Save</button>
             <button type="button" (click)="closeEditForm()">Cancel</button>
         </form>
     </div>
 </div>
-<ng-template #noorders>
-    <p class="empty-orders">No orders available.</p>
-</ng-template>

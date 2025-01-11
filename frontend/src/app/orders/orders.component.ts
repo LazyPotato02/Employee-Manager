@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {OrderService} from '../services/orders/order.service';
-import {Orders} from '../types/orders/orders.interface';
-import {NgForOf, NgIf} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Component } from '@angular/core';
+import { OrderService } from '../services/orders/order.service';
+import { Orders } from '../types/orders/orders.interface';
+import { NgForOf, NgIf } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-orders',
@@ -14,17 +14,19 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     ],
     templateUrl: './orders.component.html',
     standalone: true,
-    styleUrl: './orders.component.css'
+    styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent {
-    orders: Orders[] = []
+    orders: Orders[] = [];
     showEditForm = false;
     selectedOrder: Orders | null = null;
-    constructor(private ordersService: OrderService) {
-    }
+    showDeleteConfirmation = false;
+    orderToDelete: Orders | null = null;
 
-    ngOnInit() {
-        this.fetchOrders()
+    constructor(private ordersService: OrderService) {}
+
+    ngOnInit(): void {
+        this.fetchOrders();
     }
 
     fetchOrders(): void {
@@ -35,13 +37,13 @@ export class OrdersComponent {
             error: (err: any) => {
                 console.error('Error fetching orders:', err);
             }
-        })
+        });
     }
 
     openEditForm(order: Orders): void {
         this.selectedOrder = {
-            id: order.id || '',
-            order_name: order.order_name || '',
+            id: order.id || '', // Ensure id is always a string
+            order_name: order.order_name || '', // Provide default values if necessary
             quantity: order.quantity || 0,
             done_quantity: order.done_quantity || 0
         };
@@ -57,15 +59,9 @@ export class OrdersComponent {
         if (this.selectedOrder) {
             this.ordersService.updateOrder(this.selectedOrder).subscribe({
                 next: () => {
-                    const index = this.orders.findIndex(m => m.id === this.selectedOrder!.id);
+                    const index = this.orders.findIndex(order => order.id === this.selectedOrder?.id);
                     if (index > -1) {
-                        this.orders[index] = {
-                            id: this.selectedOrder!.id,
-                            order_name: this.selectedOrder!.order_name,
-                            quantity: this.selectedOrder!.quantity,
-                            done_quantity: this.selectedOrder!.done_quantity,
-
-                        };
+                        this.orders[index] = {done_quantity: 0, id: '', order_name: '', quantity: 0, ...this.selectedOrder };
                     }
                     this.closeEditForm();
                 },
@@ -74,5 +70,29 @@ export class OrdersComponent {
                 }
             });
         }
+    }
+
+    openDeleteConfirmation(order: Orders): void {
+        this.showDeleteConfirmation = true;
+        this.orderToDelete = order;
+    }
+
+    confirmDelete(): void {
+        if (this.orderToDelete) {
+            this.ordersService.deleteOrder(this.orderToDelete.id).subscribe({
+                next: () => {
+                    this.orders = this.orders.filter(order => order.id !== this.orderToDelete!.id);
+                    this.closeDeleteConfirmation();
+                },
+                error: (err: any) => {
+                    console.error('Error deleting order:', err);
+                }
+            });
+        }
+    }
+
+    closeDeleteConfirmation(): void {
+        this.showDeleteConfirmation = false;
+        this.orderToDelete = null;
     }
 }

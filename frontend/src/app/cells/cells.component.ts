@@ -69,7 +69,7 @@ export class CellsComponent {
                         this.employees[index] = {cell: null, first_name: '', id: 0, last_name: '', ...this.selectedEmployee }; // Safely updating with cloning
                     }
                     this.closeEditForm();
-                    window.location.reload();
+                    window.location.reload()
                 },
                 error: (err: any) => {
                     console.error('Error updating cell:', err);

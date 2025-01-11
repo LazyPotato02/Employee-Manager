@@ -16,7 +16,6 @@ export class EmployeeService {
     getAllEmployee(): Observable<Employee[]> {
         return this.http.get<Employee[]>(`${this.apiUrl}`, {withCredentials: true})
     }
-
     getEmployee(id: number): Observable<Employee[]> {
         return this.http.get<Employee[]>(`${this.apiUrl}/${id}`, {withCredentials: true})
     }
@@ -26,8 +25,10 @@ export class EmployeeService {
     getCellEmployees(cellId: string | undefined): Observable<Employee[]> {
         return this.http.get<Employee[]>(`${this.apiUrl}cellemployees/${cellId}`, {withCredentials: true});
     }
-
     createEmployee(employee: any) {
         return this.http.post(this.apiUrl, employee, {withCredentials: true});
+    }
+    deleteEmployee(employeeId: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${employeeId}`);
     }
 }
