@@ -42,8 +42,8 @@ export class OrdersComponent {
 
     openEditForm(order: Orders): void {
         this.selectedOrder = {
-            id: order.id || '', // Ensure id is always a string
-            order_name: order.order_name || '', // Provide default values if necessary
+            id: order.id || '',
+            order_name: order.order_name || '',
             quantity: order.quantity || 0,
             done_quantity: order.done_quantity || 0
         };

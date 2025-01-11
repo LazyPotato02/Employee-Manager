@@ -6,10 +6,23 @@
             <div class="order">
                 <p>Name: {{ material.material_name }}</p>
                 <p>Quantity: {{ material.quantity }}</p>
-                <button class="button" (click)="openEditForm(material)">Edit</button>
+                <div>
+                    <button class="button" (click)="openEditForm(material)">Edit</button>
+                    <button class="red" (click)="openDeleteConfirmation(material)">Delete</button>
+                </div>
+
+
             </div>
         </li>
     </ul>
+</div>
+<div *ngIf="showDeleteConfirmation" class="popup-container">
+    <div class="popup">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete order "{{ materialToDelete?.material_name }}"?</p>
+        <button (click)="confirmDelete()">Yes</button>
+        <button (click)="closeDeleteConfirmation()">No</button>
+    </div>
 </div>
 <div *ngIf="selectedMaterial" class="modal">
     <div class="modal-content">

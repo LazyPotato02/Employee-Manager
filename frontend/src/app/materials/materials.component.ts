@@ -3,6 +3,7 @@ import {MaterialService} from '../services/material/material.service';
 import {Materials} from '../types/materials/material.interface';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {Orders} from '../types/orders/orders.interface';
 
 @Component({
     selector: 'app-materials',
@@ -19,7 +20,9 @@ export class MaterialsComponent {
     materials: Materials[] = [];
     showEditForm = false;
     selectedMaterial: Materials | null = null;
-    material: Materials | undefined;
+    materialToDelete: Materials | null = null;
+    showDeleteConfirmation = false;
+
 
     constructor(private materialService: MaterialService) {
     }
@@ -72,5 +75,29 @@ export class MaterialsComponent {
                 }
             });
         }
+    }
+
+    openDeleteConfirmation(material: Materials): void {
+        this.showDeleteConfirmation = true;
+        this.materialToDelete = material;
+    }
+
+    confirmDelete(): void {
+        if (this.materialToDelete) {
+            this.materialService.deleteMaterial(this.materialToDelete.id).subscribe({
+                next: () => {
+                    this.materials = this.materials.filter(order => order.id !== this.materialToDelete!.id);
+                    this.closeDeleteConfirmation();
+                },
+                error: (err: any) => {
+                    console.error('Error deleting order:', err);
+                }
+            });
+        }
+    }
+
+    closeDeleteConfirmation(): void {
+        this.showDeleteConfirmation = false;
+        this.materialToDelete = null;
     }
 }

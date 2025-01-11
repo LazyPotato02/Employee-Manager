@@ -25,4 +25,7 @@ export class MaterialService {
     createMaterial(employee: any) {
         return this.http.post(this.apiUrl, employee, {withCredentials: true});
     }
+    deleteMaterial(materialId: string): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}${materialId}`,{withCredentials: true});
+    }
 }
