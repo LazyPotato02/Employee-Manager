@@ -3,7 +3,6 @@ import {MaterialService} from '../services/material/material.service';
 import {Materials} from '../types/materials/material.interface';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Orders} from '../types/orders/orders.interface';
 
 @Component({
     selector: 'app-materials',

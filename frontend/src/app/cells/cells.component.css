@@ -36,7 +36,9 @@
     height: 60px;
     flex-direction: column;
 }
-
+.employee button{
+    margin-top: 10px;
+}
 .employee:hover {
     background-color: #4a90e2;
     color: white;

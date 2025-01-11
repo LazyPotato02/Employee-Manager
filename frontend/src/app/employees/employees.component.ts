@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {OrderService} from '../services/orders/order.service';
 import {Employee} from '../types/employee/employee.inferface';
 import {EmployeeService} from '../services/employee/employee.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -20,6 +19,9 @@ export class EmployeesComponent {
     employees: Employee[] = []
     showEditForm = false;
     selectedEmployee: Employee | null = null;
+    employeeToDelete: Employee | null = null;
+    showDeleteConfirmation = false;
+
     constructor(private employeeService: EmployeeService) {
     }
 
@@ -74,5 +76,28 @@ export class EmployeesComponent {
                 }
             });
         }
+    }
+    openDeleteConfirmation(employee: Employee): void {
+        this.showDeleteConfirmation = true;
+        this.employeeToDelete = employee;
+    }
+
+    confirmDelete(): void {
+        if (this.employeeToDelete) {
+            this.employeeService.deleteEmployee(this.employeeToDelete.id).subscribe({
+                next: () => {
+                    this.employees = this.employees.filter(employee => employee.id !== this.employeeToDelete!.id);
+                    this.closeDeleteConfirmation();
+                },
+                error: (err: any) => {
+                    console.error('Error deleting order:', err);
+                }
+            });
+        }
+    }
+
+    closeDeleteConfirmation(): void {
+        this.showDeleteConfirmation = false;
+        this.employeeToDelete = null;
     }
 }

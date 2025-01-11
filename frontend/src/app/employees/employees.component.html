@@ -4,13 +4,24 @@
     <ul class="employees-list">
         <li *ngFor="let employee of employees">
             <div class="employee">
-                <p>{{employee.id}}</p>
+                <p>{{ employee.id }}</p>
                 <p>{{ employee.first_name }} {{ employee.last_name }}</p>
                 <p>Cell: {{ employee.cell }}</p>
-                <button class="button" (click)="openEditForm(employee)">Edit</button>
+                <div>
+                    <button class="edit button" (click)="openEditForm(employee)">Edit</button>
+                    <button class="red button" (click)="openDeleteConfirmation(employee)">Delete</button>
+                </div>
             </div>
         </li>
     </ul>
+</div>
+<div *ngIf="showDeleteConfirmation" class="popup-container">
+    <div class="popup">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete Employee "{{ employeeToDelete?.first_name }} {{ employeeToDelete?.last_name }}" ?</p>
+        <button (click)="confirmDelete()">Yes</button>
+        <button (click)="closeDeleteConfirmation()">No</button>
+    </div>
 </div>
 <div *ngIf="selectedEmployee" class="modal">
     <div class="modal-content">

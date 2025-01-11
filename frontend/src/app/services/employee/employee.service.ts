@@ -29,6 +29,6 @@ export class EmployeeService {
         return this.http.post(this.apiUrl, employee, {withCredentials: true});
     }
     deleteEmployee(employeeId: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${employeeId}`);
+        return this.http.delete<void>(`${this.apiUrl}${employeeId}`,{withCredentials: true});
     }
 }

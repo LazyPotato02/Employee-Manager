@@ -19,7 +19,7 @@
 <div *ngIf="showDeleteConfirmation" class="popup-container">
     <div class="popup">
         <h3>Confirm Deletion</h3>
-        <p>Are you sure you want to delete order "{{ materialToDelete?.material_name }}"?</p>
+        <p>Are you sure you want to delete material "{{ materialToDelete?.material_name }}"?</p>
         <button (click)="confirmDelete()">Yes</button>
         <button (click)="closeDeleteConfirmation()">No</button>
     </div>
