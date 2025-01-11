@@ -1,6 +1,6 @@
 export interface Employee {
   id: number;
-  first_name: '',
-  last_name: '',
+  first_name: string,
+  last_name: string,
   cell: null,
 }

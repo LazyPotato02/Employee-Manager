@@ -1,1 +1,35 @@
-<p>employees works!</p>
+<div class="employee-container" *ngIf="employees.length > 0; else noemployees">
+    <h2 class="employee-title">Employees List</h2>
+
+    <ul class="employees-list">
+        <li *ngFor="let employee of employees">
+            <div class="employee">
+                <p>{{employee.id}}</p>
+                <p>{{ employee.first_name }} {{ employee.last_name }}</p>
+                <p>Cell: {{ employee.cell }}</p>
+                <button class="button" (click)="openEditForm(employee)">Edit</button>
+            </div>
+        </li>
+    </ul>
+</div>
+<div *ngIf="selectedEmployee" class="modal">
+    <div class="modal-content">
+        <h3>Edit Employee</h3>
+        <form (ngSubmit)="saveEdit()">
+            <label for="employee_name">First Name:</label>
+            <input id="employee_name" [(ngModel)]="selectedEmployee.first_name" name="first_name" required>
+
+            <label for="quantity">Last Name:</label>
+            <input id="quantity" [(ngModel)]="selectedEmployee.last_name" name="last_name" required>
+
+            <label for="done_quantity">Cell:</label>
+            <input id="done_quantity" [(ngModel)]="selectedEmployee.cell" name="cell" required>
+
+            <button type="submit">Save</button>
+            <button type="button" (click)="closeEditForm()">Cancel</button>
+        </form>
+    </div>
+</div>
+<ng-template #noemployees>
+    <p class="empty-employees">No employees available.</p>
+</ng-template>

@@ -3,7 +3,6 @@ import {OrderService} from '../services/orders/order.service';
 import {Orders} from '../types/orders/orders.interface';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Materials} from '../types/materials/material.interface';
 
 @Component({
     selector: 'app-orders',
