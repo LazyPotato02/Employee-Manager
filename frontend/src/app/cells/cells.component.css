@@ -4,6 +4,7 @@
     align-items: center;
     flex-direction: column;
 }
+
 .global-actions .action-button {
     padding: 10px 20px;
     border: none;
@@ -13,6 +14,8 @@
     background-color: #4caf50;
     color: white;
     transition: background-color 0.3s ease;
+    margin-right: 10px;
+
 }
 
 .global-actions .action-button.red {
@@ -22,6 +25,7 @@
 .global-actions .action-button.red:hover {
     background-color: #96190c;
 }
+
 .employee-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -30,6 +34,10 @@
     margin: 20px auto;
     width: 90%;
     max-width: 1200px;
+}
+
+.employee-list p {
+    margin: 10px 0;
 }
 
 .employee {
@@ -50,7 +58,7 @@
     word-break: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 60px;
+    height: 80%;
     flex-direction: column;
 }
 
@@ -68,6 +76,20 @@
     font-size: 48px;
     transition: all 0.3s ease-in-out;
     text-overflow: ellipsis;
+}
+
+.employee-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.employee-checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
 }
 
 .edit {
@@ -107,6 +129,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+
     button {
         background-color: #4caf50;
         color: white;

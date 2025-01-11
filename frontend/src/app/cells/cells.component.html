@@ -1,11 +1,14 @@
 <div class="cell-container">
     <h1 class="employee-title">Employees in Cell {{ id }}</h1>
     <div class="global-actions">
+        <button class="action-button" (click)="openAddEmployeesPopup()">Add Employees</button>
         <button class="action-button red" (click)="openDeleteCellConfirmation()">Delete Cell</button>
+        <button class="action-button red" (click)="removeAllEmployees()">Remove All Employees</button>
     </div>
     <div class="employee-list">
         <div *ngFor="let employee of employees; trackBy: trackById" class="employee">
-            <p>ID: {{ employee.id }} {{ employee.first_name }} {{ employee.last_name }}</p>
+            <p>ID: {{ employee.id }}</p>
+            <p>{{ employee.first_name }} {{ employee.last_name }}</p>
             <button class="edit" (click)="openEditForm(employee)">Edit</button>
         </div>
         <p *ngIf="employees?.length === 0" class="empty-employee">
@@ -13,6 +16,28 @@
         </p>
     </div>
 </div>
+
+<div *ngIf="showAddEmployeesPopup" class="popup-container">
+    <div class="popup">
+        <h3>Select Employees to Add to Cell {{ id }}</h3>
+        <form (ngSubmit)="addSelectedEmployees()">
+            <div class="employee-checkbox" *ngFor="let employee of allEmployees">
+                <label>
+                    <input
+                        type="checkbox"
+                        [value]="employee.id"
+                        [(ngModel)]="employee.checked"
+                        name="selectedEmployees"
+                    />
+                    {{ employee.first_name }} {{ employee.last_name }} (Current Cell: {{ employee.cell || 'None' }})
+                </label>
+            </div>
+            <button type="submit" class="confirm">Add Employees</button>
+            <button type="button" class="cancel" (click)="closeAddEmployeesPopup()">Cancel</button>
+        </form>
+    </div>
+</div>
+
 
 <div *ngIf="showDeleteConfirmation" class="popup-container">
     <div class="popup">
@@ -35,8 +60,8 @@
                 type="text"
                 required
             />
-            <button type="submit">Save</button>
-            <button type="button" (click)="closeEditForm()">Cancel</button>
+            <button type="submit" class="confirm">Save</button>
+            <button type="button" class="cancel" (click)="closeEditForm()">Cancel</button>
         </form>
     </div>
 </div>

@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from cells.models import Cell
 from employees.models import Employee
 from employees.serializers import EmployeeSerializer
 
@@ -67,3 +68,33 @@ class GetEmployeesFromCellsView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Employee.DoesNotExist:
             return Response({"error": "Employee not found"}, status=status.HTTP_404_NOT_FOUND)
+
+from django.shortcuts import get_object_or_404
+
+class BulkUpdateEmployeesView(APIView):
+    def put(self, request):
+        if not isinstance(request.data, list):
+            return Response({"error": "Expected a list of employee updates."}, status=status.HTTP_400_BAD_REQUEST)
+
+        errors = []
+        for employee_data in request.data:
+            try:
+                employee = Employee.objects.get(id=employee_data['id'])
+
+                if employee_data['cell'] == "0":
+                    employee.cell = None
+                else:
+                    employee.cell = get_object_or_404(Cell, id=employee_data['cell'])
+
+                employee.save()
+            except Employee.DoesNotExist:
+                errors.append(f"Employee with id {employee_data['id']} not found.")
+            except Cell.DoesNotExist:
+                errors.append(f"Cell with id {employee_data['cell']} not found.")
+            except KeyError:
+                errors.append("Invalid data format for employee update.")
+
+        if errors:
+            return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"message": "Employees updated successfully"}, status=status.HTTP_200_OK)

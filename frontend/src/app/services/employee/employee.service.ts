@@ -28,6 +28,16 @@ export class EmployeeService {
     createEmployee(employee: any) {
         return this.http.post(this.apiUrl, employee, {withCredentials: true});
     }
+
+    updateMultipleEmployees(employees: {
+        id: number;
+        first_name: string;
+        last_name: string;
+        cell: string | undefined;
+        checked?: boolean
+    }[]): Observable<void> {
+        return this.http.put<void>(`${this.apiUrl}bulk-update`, employees, {withCredentials: true});
+    }
     deleteEmployee(employeeId: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}${employeeId}`,{withCredentials: true});
     }

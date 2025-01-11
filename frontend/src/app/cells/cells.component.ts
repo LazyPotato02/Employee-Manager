@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CellServices } from '../services/cells/cell.services';
-import { Employee } from '../types/employee/employee.inferface';
-import { EmployeeService } from '../services/employee/employee.service';
-import { FormsModule } from '@angular/forms';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CellServices} from '../services/cells/cell.services';
+import {Employee} from '../types/employee/employee.inferface';
+import {EmployeeService} from '../services/employee/employee.service';
+import {FormsModule} from '@angular/forms';
 import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
@@ -21,9 +21,11 @@ import {NgForOf, NgIf} from '@angular/common';
 export class CellsComponent {
     id: string | undefined;
     employees: Employee[] = [];
+    allEmployees: (Employee & { checked?: boolean })[] = [];
     selectedEmployee: Employee | null = null;
     showEditForm: boolean = false;
     showDeleteConfirmation: boolean = false;
+    showAddEmployeesPopup: boolean = false;
 
     constructor(
         private router: Router,
@@ -38,6 +40,17 @@ export class CellsComponent {
 
     ngOnInit(): void {
         if (this.id) {
+            this.fetchCellEmployees();
+            this.fetchAllEmployees();
+        }
+    }
+
+    trackById(index: number, employee: Employee): string {
+        return employee.id.toString();
+    }
+
+    fetchCellEmployees(): void {
+        if (this.id) {
             this.employeeService.getCellEmployees(this.id).subscribe({
                 next: (data: Employee[]) => {
                     this.employees = data;
@@ -49,12 +62,56 @@ export class CellsComponent {
         }
     }
 
-    trackById(index: number, employee: Employee): string {
-        return employee.id.toString();
+    fetchAllEmployees(): void {
+        this.employeeService.getAllEmployee().subscribe({
+            next: (data: Employee[]) => {
+                this.allEmployees = data
+                    .filter(emp => {
+                        const employeeCell = emp.cell ? String(emp.cell) : null;
+                        const currentCellId = this.id ? String(this.id) : null;
+
+                        return employeeCell !== currentCellId;
+                    })
+                    .map(emp => ({...emp, checked: false}));
+
+                console.log('Filtered employees (not in current cell):', this.allEmployees);
+            },
+            error: (err) => {
+                console.error('Error fetching all employees:', err);
+            }
+        });
+    }
+
+
+    openAddEmployeesPopup(): void {
+        this.fetchAllEmployees();
+        this.showAddEmployeesPopup = true;
+    }
+
+    closeAddEmployeesPopup(): void {
+        this.showAddEmployeesPopup = false;
+    }
+
+    addSelectedEmployees(): void {
+        const selectedEmployees = this.allEmployees.filter(emp => emp.checked);
+        const updates = selectedEmployees.map(emp => ({
+            ...emp,
+            cell: this.id // Set their cell to the current cell
+        }));
+
+        this.employeeService.updateMultipleEmployees(updates).subscribe({
+            next: () => {
+                this.fetchCellEmployees(); // Refresh cell employees
+                this.closeAddEmployeesPopup();
+            },
+            error: (err: any) => {
+                console.error('Error updating employees:', err);
+            }
+        });
     }
 
     openEditForm(employee: Employee): void {
-        this.selectedEmployee = { ...employee };
+        this.selectedEmployee = {...employee};
         this.showEditForm = true;
     }
 
@@ -69,12 +126,18 @@ export class CellsComponent {
                 next: () => {
                     const index = this.employees.findIndex(e => e.id === this.selectedEmployee?.id);
                     if (index > -1) {
-                        this.employees[index] = {cell: null, first_name: '', id: 0, last_name: '', ...this.selectedEmployee };
+                        this.employees[index] = {
+                            cell: null,
+                            first_name: '',
+                            id: 0,
+                            last_name: '', ...this.selectedEmployee
+                        };
                     }
                     this.closeEditForm();
+                    window.location.reload();
                 },
-                error: (err: any) => {
-                    console.error('Error updating cell:', err);
+                error: (err) => {
+                    console.error('Error updating employee:', err);
                 }
             });
         }
@@ -92,13 +155,34 @@ export class CellsComponent {
         if (this.id) {
             this.cellService.deleteCell(this.id).subscribe({
                 next: () => {
-                    console.log(`Cell ${this.id} deleted successfully.`);
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/']); // Redirect after deletion
                 },
                 error: (err) => {
-                    console.error(`Error deleting cell ${this.id}:`, err);
+                    console.error('Error deleting cell:', err);
                 }
             });
         }
+    }
+
+    removeAllEmployees(): void {
+        if (this.employees.length === 0) {
+            console.log('No employees to remove.');
+            return;
+        }
+
+        const updates = this.employees.map(emp => ({
+            ...emp,
+            cell: '0'
+        }));
+
+        this.employeeService.updateMultipleEmployees(updates).subscribe({
+            next: () => {
+                console.log('All employees removed from the cell.');
+                this.employees = [];
+            },
+            error: (err) => {
+                console.error('Error removing employees from the cell:', err);
+            }
+        });
     }
 }
