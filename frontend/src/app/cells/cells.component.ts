@@ -205,17 +205,26 @@ export class CellsComponent {
         if (order.order_name) {
             this.orderService.getOrder(order.order_name).subscribe({
                 next: (response: Orders) => {
-                    this.order = { ...response }
+                    this.order = {...response}
                     if (this.id != null) {
                         this.order.working_cell = Number(this.id)
                     }
                     this.orderService.updateOrder(this.order).subscribe({
                         next: (response: Orders) => {
                             console.log(response);
-                        },error: (err: any) => {
+                        }, error: (err: any) => {
                             console.error('Error updating order:', err);
                         }
                     })
+                    if (this.id != null) {
+                        this.cellService.updateCellWorkingStatus(this.id, {started_job: true}).subscribe({
+                            next: (response: any) => {
+                                console.log(response);
+                            }, error: (err: any) => {
+                                console.error('Error updating cell:', err);
+                            }
+                        })
+                    }
                 }, error: (err: any) => {
                     console.error('Error updating order:', err);
                 }

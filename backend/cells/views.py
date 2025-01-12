@@ -46,6 +46,16 @@ class SingleCellView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def patch(self, request, id):
+        try:
+            employee = Cell.objects.get(pk=id)
+        except Cell.DoesNotExist:
+            return Response({"error": "Cell not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = CellSerializer(employee, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, id):
         try:
             employee = Cell.objects.get(pk=id)

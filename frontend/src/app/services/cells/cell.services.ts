@@ -20,6 +20,10 @@ export class CellServices {
         return this.http.post(this.apiUrl, cell, {withCredentials: true});
     }
 
+    updateCellWorkingStatus(cellId: string, updateCellWorkingStatus: { started_job: boolean }) {
+        return this.http.patch(`${this.apiUrl}${cellId}`, updateCellWorkingStatus, {withCredentials: true});
+    }
+
     deleteCell(cellId: string): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}${cellId}`, {withCredentials: true});
     }
