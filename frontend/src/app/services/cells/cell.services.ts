@@ -16,11 +16,15 @@ export class CellServices {
         return this.http.get<Cells[]>(this.apiUrl, {withCredentials: true})
     }
 
+    getCell(cellId: string | undefined): Observable<Cells[]> {
+        return this.http.get<Cells[]>(`${this.apiUrl}${cellId}`, {withCredentials: true})
+    }
+
     createCell(cell: any) {
         return this.http.post(this.apiUrl, cell, {withCredentials: true});
     }
 
-    updateCellWorkingStatus(cellId: string, updateCellWorkingStatus: { started_job: boolean }) {
+    updateCellWorkingStatus(cellId: string | undefined, updateCellWorkingStatus: { job: any }) {
         return this.http.patch(`${this.apiUrl}${cellId}`, updateCellWorkingStatus, {withCredentials: true});
     }
 

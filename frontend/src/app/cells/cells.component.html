@@ -1,10 +1,12 @@
 <div class="cell-container">
     <h1 class="employee-title">Employees in Cell {{ id }}</h1>
     <div class="global-actions">
-        <button class="action-button" (click)="openStartForm()">Start Order</button>
-        <button class="action-button" (click)="openAddEmployeesPopup()">Add Employees</button>
-        <button class="action-button red" (click)="openDeleteCellConfirmation()">Delete Cell</button>
-        <button class="action-button red" (click)="removeAllEmployees()">Remove All Employees</button>
+
+        <button *ngIf="!cell.job" class="action-button" (click)="openStartForm()">Start Order</button>
+        <button *ngIf="cell.job" class="action-button" (click)="openStopForm()">Stop Order</button>
+        <button *ngIf="!cell.job" class="action-button" (click)="openAddEmployeesPopup()">Add Employees</button>
+        <button *ngIf="!cell.job" class="action-button red" (click)="openDeleteCellConfirmation()">Delete Cell</button>
+        <button *ngIf="!cell.job" class="action-button red" (click)="removeAllEmployees()">Remove All Employees</button>
     </div>
     <div class="employee-list">
         <div *ngFor="let employee of employees; trackBy: trackById" class="employee">
@@ -34,7 +36,23 @@
         </form>
     </div>
 </div>
-
+<div *ngIf="showStopOrder" class="popup-container">
+    <div class="popup">
+        <h3>Stop Order</h3>
+        <form (ngSubmit)="submitStopOrder(doneQuantityInput)">
+            <label for="doneQuantity">Quantity:</label>
+            <input
+                id="doneQuantity"
+                name="doneQuantity"
+                [(ngModel)]="doneQuantityInput"
+                type="number"
+                required
+            />
+            <button type="submit" class="confirm">Save</button>
+            <button type="button" class="cancel" (click)="closeStopForm()">Cancel</button>
+        </form>
+    </div>
+</div>
 <div *ngIf="showAddEmployeesPopup" class="popup-container">
     <div class="popup">
         <h3>Select Employees to Add to Cell {{ id }}</h3>

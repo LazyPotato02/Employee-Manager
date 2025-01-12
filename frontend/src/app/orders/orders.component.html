@@ -6,6 +6,7 @@
             <p>Name: {{ order.order_name }}</p>
             <p>Quantity: {{ order.quantity }}</p>
             <p>Done: {{ order.done_quantity }}</p>
+            <p>Cell: {{ order.working_cell }}</p>
             <div>
                 <button class="action-button" (click)="openEditForm(order)">Edit</button>
                 <button class="action-button red" (click)="openDeleteConfirmation(order)">Delete</button>

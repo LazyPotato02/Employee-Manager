@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {NgForOf, NgIf} from '@angular/common';
 import {Orders} from '../types/orders/orders.interface';
 import {OrderService} from '../services/orders/order.service';
+import {Cells} from '../types/cells/cell.interface';
 
 @Component({
     selector: 'app-cells',
@@ -29,7 +30,10 @@ export class CellsComponent {
     showDeleteConfirmation: boolean = false;
     showAddEmployeesPopup: boolean = false;
     showStartOrder: boolean = false;
+    showStopOrder: boolean = false;
     order: Orders = {id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: 0};
+    cell: Cells = {id: 0, name: '', job: ''};
+    doneQuantityInput: number | null = null;
 
     constructor(
         private router: Router,
@@ -46,8 +50,21 @@ export class CellsComponent {
     ngOnInit(): void {
         if (this.id) {
             this.fetchCellEmployees();
-            this.fetchAllEmployees();
+            this.fetchCell(this.id);
         }
+
+
+    }
+
+    fetchCell(id: string) {
+        this.cellService.getCell(id).subscribe({
+            next: (response: any) => {
+                this.cell = response
+                this.fetchOrder(this.cell.job)
+            }, error: (err: any) => {
+                console.error('Error updating cell:', err);
+            }
+        })
     }
 
     trackById(index: number, employee: Employee): string {
@@ -205,35 +222,99 @@ export class CellsComponent {
         if (order.order_name) {
             this.orderService.getOrder(order.order_name).subscribe({
                 next: (response: Orders) => {
-                    this.order = {...response}
-                    if (this.id != null) {
-                        this.order.working_cell = Number(this.id)
-                    }
+                    this.order = {...response};
+                    this.order.working_cell = Number(this.id ?? 0);
+
                     this.orderService.updateOrder(this.order).subscribe({
-                        next: (response: Orders) => {
-                            console.log(response);
-                        }, error: (err: any) => {
-                            console.error('Error updating order:', err);
-                        }
-                    })
-                    if (this.id != null) {
-                        this.cellService.updateCellWorkingStatus(this.id, {started_job: true}).subscribe({
-                            next: (response: any) => {
-                                console.log(response);
-                            }, error: (err: any) => {
-                                console.error('Error updating cell:', err);
-                            }
-                        })
-                    }
+                        next: () => console.log('Order updated successfully.'),
+                        error: (err) => console.error('Error updating order:', err)
+                    });
+
+                    this.cellService.updateCellWorkingStatus(this.id!, {job: order.order_name}).subscribe({
+                        next: () => {
+                            console.log('Cell status updated.');
+                            window.location.reload();
+                        },
+                        error: (err) => console.error('Error updating cell:', err)
+                    });
                 }, error: (err: any) => {
                     console.error('Error updating order:', err);
                 }
             })
-
         } else {
             console.error('Order name is required!');
         }
         this.closeStartForm();
     }
 
+    openStopForm() {
+        this.showStopOrder = true;
+        this.doneQuantityInput = null
+        if (!this.order || !this.order.id) {
+            this.resetOrder();
+        }
+    }
+
+    closeStopForm() {
+        this.showStopOrder = false;
+    }
+
+    fetchOrder(job: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (job !== 'none') {
+                this.orderService.getOrder(job).subscribe({
+                    next: (response: Orders) => {
+                        this.order = response;
+                        console.log('Order fetched');
+                        resolve();
+                    },
+                    error: (err: any) => {
+                        console.error('Error fetching order:', err);
+                        reject(err);
+                    }
+                });
+            } else {
+                console.log('No job provided. Skipping order fetch.');
+                this.cell.job = '';
+                this.order = { id: '', order_name: '', quantity: 0, done_quantity: 0, working_cell: 0 };
+                resolve();
+            }
+        });
+    }
+
+    async submitStopOrder(doneQuantity: number | null): Promise<void> {
+        if (doneQuantity === null || doneQuantity <= 0) {
+            console.error('Invalid done quantity entered.');
+            return;
+        }
+        if (!this.cell.job) {
+            console.error('Job not set. Cannot stop order.');
+            return;
+        }
+
+        try {
+            await this.fetchOrder(this.cell.job);
+            this.order.done_quantity += doneQuantity;
+            this.order.working_cell = 0;
+
+            this.orderService.updateOrder(this.order).subscribe({
+                next: (response: Orders) => {
+                    this.order = response;
+                    console.log('Order updated:');
+                    this.cellService.updateCellWorkingStatus(this.id, {job:'none'}).subscribe({
+                        next: () => {
+                            console.log('Cell status updated.');
+                            window.location.reload();
+                        },
+                        error: (err) => console.error('Error updating cell:', err)
+                    });
+                },
+                error: (err: any) => console.error('Error updating order:', err)
+            });
+
+            this.closeStopForm();
+        } catch (err) {
+            console.error('Error stopping order:', err);
+        }
+    }
 }

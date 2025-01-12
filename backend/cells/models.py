@@ -4,4 +4,4 @@ from django.db import models
 
 class Cell(models.Model):
     name = models.CharField(max_length=100)
-    started_job = models.BooleanField(default=False)
+    job = models.CharField(default='')
