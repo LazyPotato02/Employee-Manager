@@ -26,14 +26,15 @@ export class HomeComponent {
     this.fetchCells()
   }
 
-  fetchCells() {
-    this.homeService.getCells().subscribe(
-      (data: Cells[]) => {
-        this.cells = data;
-      },
-      (error) => {
-        console.error('Error fetching cells:', error);
-      }
-    );
-  }
+    fetchCells() {
+        this.homeService.getCells().subscribe(
+            (data: Cells[]) => {
+                this.cells = data.sort((a, b) => a.id - b.id);
+                console.log('Cells fetched and sorted by ID:');
+            },
+            (error) => {
+                console.error('Error fetching cells:', error);
+            }
+        );
+    }
 }
